@@ -107,7 +107,7 @@ const generateLoremFidsum = (phrases, count) => {
 const generateFidlarText = (text) => {
   let formattedText = '';
   text.forEach((para) => {
-    formattedText += `<p>${para.p}</p>`;
+    formattedText += `${para.p}\n\n`;
   });
   return formattedText;
 };
