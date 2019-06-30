@@ -3,6 +3,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   Button, Input, Container, Message, Segment,
 } from 'semantic-ui-react';
+import GitHubButton from 'react-github-btn';
 import content from './content';
 import fidlerPhrasesData from './phrases';
 
@@ -114,7 +115,7 @@ const LoremFidsum = () => {
   const [text, upDateText] = useState([]); // the paragraphs
   const [count, upDateCount] = useState(1); // the amount of paragraphs to generate
   const [formattedText, updateFormattedText] = useState(''); // the formatted text for copyimg
-
+  const [copied, updateCopied] = useState(false);
   /**
    * Trigger this once text has been generated
    * for the formatted text
@@ -142,6 +143,7 @@ const LoremFidsum = () => {
             max={max}
             name="count"
             value={count}
+            style={{ maxWidth: '100%' }}
           >
             <input />
             <Button
@@ -152,7 +154,7 @@ const LoremFidsum = () => {
                 upDateText(() => generateLoremFidsum(fidlerPhrases, count));
               }}
             >
-              generate
+              Generate
               {' '}
               {count}
               {' '}
@@ -181,19 +183,39 @@ const LoremFidsum = () => {
         { text.length > 0 && (
           <>
             <Message>
-              <CopyToClipboard text={formattedText}>
+              <CopyToClipboard
+                text={formattedText}
+              >
                 <Button
                   basic
                   type="button"
-                  color="teal"
+                  color={copied ? 'olive' : 'teal'}
+                  onClick={() => {
+                    updateCopied(true);
+                    setTimeout(() => {
+                      updateCopied(false);
+                    }, 3000);
+                  }}
                 >
-                  copy to clipboard
+                  {copied ? 'Copied! Now go paste.' : 'Copy to clipboard'}
                 </Button>
               </CopyToClipboard>
             </Message>
 
           </>
         )}
+
+        <div style={{ paddingTop: 20 }}>
+          <GitHubButton
+            href="https://github.com/invisibleloop/lorem-fidsum"
+            data-icon="octicon-star"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star invisibleloop/lorem-fidsum on GitHub"
+          >
+            Star
+          </GitHubButton>
+        </div>
 
         <p style={{ paddingTop: 30, paddingBottom: 30 }}>{content.copyright.replace('<year>', new Date().getFullYear())}</p>
 
