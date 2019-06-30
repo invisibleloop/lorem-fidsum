@@ -6,6 +6,7 @@ import {
 import GitHubButton from 'react-github-btn';
 import content from './content';
 import fidlerPhrasesData from './phrases';
+import logo from './logo.png';
 
 // settings
 const min = 1;
@@ -130,20 +131,30 @@ const LoremFidsum = () => {
         text
         textAlign="center"
       >
-        <Segment placeholder style={{ marginTop: 30 }}>
+        <Segment
+          placeholder
+          style={{
+            marginTop: 30,
+          }
+        }
+        >
+          <img src={logo} alt="LF logo" width="40" height="40" style={{ marginRight: 'auto', marginLeft: 'auto' }} />
           <h1>{content.title}</h1>
           <p>{content.description}</p>
           <Input
             action
             onChange={(e) => {
-              upDateCount(e.target.value);
+              upDateCount(+e.target.value);
             }}
             type="number"
             min={min}
             max={max}
             name="count"
             value={count}
-            style={{ maxWidth: '100%' }}
+            style={{
+              maxWidth: '100%',
+              fontSize: 16,
+            }}
           >
             <input />
             <Button
