@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
-  Button, Input, Container, Message, Segment,
+  Form, Button, Container, Message, Segment,
 } from 'semantic-ui-react';
 import GitHubButton from 'react-github-btn';
 import content from './content';
@@ -9,8 +9,6 @@ import fidlerPhrasesData from './phrases';
 import logo from './logo.png';
 
 // settings
-const min = 1;
-const max = 100;
 const fidlerPhrases = fidlerPhrasesData;
 
 /**
@@ -125,6 +123,14 @@ const LoremFidsum = () => {
     updateFormattedText(() => generateFidlarText(text));
   }, [text]);
 
+  const options = [
+    { key: 1, text: '1', value: 1 },
+    { key: 2, text: '2', value: 2 },
+    { key: 3, text: '3', value: 3 },
+    { key: 4, text: '5', value: 5 },
+    { key: 5, text: '8', value: 8 },
+  ]
+
   return (
     <>
       <Container
@@ -141,38 +147,34 @@ const LoremFidsum = () => {
           <img src={logo} alt="LF logo" width="40" height="40" style={{ marginRight: 'auto', marginLeft: 'auto' }} />
           <h1>{content.title}</h1>
           <p>{content.description}</p>
-          <Input
-            action
-            onChange={(e) => {
-              upDateCount(+e.target.value);
-            }}
-            type="number"
-            min={min}
-            max={max}
-            name="count"
-            value={count}
-            style={{
-              maxWidth: '100%',
-              fontSize: 16,
-            }}
-          >
-            <input />
-            <Button
-              className="ui button"
-              color="green"
-              type="submit"
-              onClick={() => {
-                upDateText(() => generateLoremFidsum(fidlerPhrases, count));
-              }}
-            >
-              Generate
-              {' '}
-              {count}
-              {' '}
-              paragraph
-              { count === 1 ? '' : 's'}
-            </Button>
-          </Input>
+          <Form>
+            <Form.Group style={{ justifyContent: 'center' }}>
+              <Form.Dropdown 
+                name="count" 
+                options={options} 
+                defaultValue={options[0].value} 
+                compact
+                selection 
+                onChange={(e, {name, value}) => {
+                  upDateCount(value);
+                }} 
+              />
+              <Form.Button
+                color="green"
+                type="submit"
+                onClick={() => {
+                  upDateText(() => generateLoremFidsum(fidlerPhrases, count));
+                }}
+                >
+                Generate
+                {' '}
+                {count}
+                {' '}
+                paragraph
+                { count === 1 ? '' : 's'}
+              </Form.Button>
+            </Form.Group>
+          </Form>
         </Segment>
 
       </Container>
